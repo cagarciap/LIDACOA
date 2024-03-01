@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="favicon.ico">
+   {% load bootstrap4 %}
+    {% bootstrap_css %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>Crear Base de Datos Bibliográfica</title>
+
+</head>
+<body>
+
+<h6 style="font-family: Arial; color: #00C1FF; font-size:40px" class="card-title text-center">Agregar una Nueva Base de Datos Bibliográfica</h6>
+<br>
+<form action="/formularioAgregarBaseDatos/" method="post">
+    {% csrf_token %}
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label>Name</label>
+      <input type="text" name="nameDataBase" class="form-control">
+    </div>
+    <div class="form-group col-md-6">
+      <label>Url</label>
+      <input type="text" name="url" id="url" class="form-control" onchange="crearURL()">
+    </div>
+  </div>
+
+   <div class="form-row">
+    <div class="form-group col-md-6">
+      <label>Customer_id</label>
+      <input type="text" name="customer_id" id="customerId" class="form-control" onchange="crearURL()">
+    </div>
+    <div class="form-group col-md-6">
+      <label>Requestor_id</label>
+      <input type="text" name="requestor_id" id="requestorId" class="form-control" onchange="crearURL()">
+    </div>
+  </div>
+
+    <div class="form-row">
+    <div class="form-group col-md-6">
+      <label>Api_key</label>
+      <input type="text" name="api_key" id="apiKey" class="form-control" onchange="crearURL()">
+    </div>
+    <div class="form-group col-md-6">
+      <label>Platform</label>
+      <input type="text" name="platform" id="platform" class="form-control" onchange="crearURL()">
+    </div>
+  </div>
+
+   <div class="form-row">
+    <div class="form-group col-md-6">
+      <label>Passw</label>
+      <input type="text" name="pass" class="form-control">
+    </div>
+    <div class="form-group col-md-6">
+      <label>User</label>
+      <input type="text" name="user" class="form-control">
+    </div>
+  </div>
+
+    <div class="form-group">
+    <label for="urlFinal">Url a Ingresar</label>
+    <input type="text" name="nameDataSet" class="form-control" id="urlFinal" contenteditable="true" size="250" onchange="ponerURL()">
+  </div>
+
+   <div class="form-group row">
+    <div class="col-sm-2">Formatos de Base de datos</div>
+    <div class="col-sm-10">
+      <div class="form-check">
+        {% for formato in arregloFormatos %}
+        <input class="form-check-input" type="checkbox" name="{{formato}}" value="1"> {{formato}}<br><br>
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+
+    <script>
+        var urlPeticion = "";
+function crearURL() {
+    //this.value la variable de la funcion en HTML
+    urlPeticion="";
+    var apiKey=document.getElementById("apiKey").value;
+    var customerId=document.getElementById("customerId").value;
+    var platform=document.getElementById("platform").value;
+    var requestorId=document.getElementById("requestorId").value;
+    var url=document.getElementById("url").value;
+    var urlFinal=document.getElementById("urlFinal");
+
+    if (""!=url) {
+        urlPeticion += url + "/reports/TipoFormato?";
+    }
+     if (""!=customerId) {
+        urlPeticion += "customer_id=" + customerId;
+    }
+    if (""!=requestorId) {
+        urlPeticion += "&requestor_id=" + requestorId;
+    }
+    if (""!=apiKey) {
+        urlPeticion += "&api_key=" + apiKey;
+    }
+    if (""!=platform) {
+        urlPeticion += "&platform=" + platform;
+    }
+    urlFinal.value = urlPeticion;
+
+}
+function ponerURL() {
+    var apiKey=document.getElementById("apiKey");
+    var customerId=document.getElementById("customerId");
+    var platform=document.getElementById("platform");
+    var requestorId=document.getElementById("requestorId");
+    var url=document.getElementById("url");
+    var urlFinal=document.getElementById("urlFinal").value;
+    var temp = urlFinal;
+
+    var elementos = ["&customer_id=","&requestor_id=","&api_key=","&platform="];
+    var booelemnetos = [0,0,0,0];
+    var count=0;
+
+    if (temp.indexOf("https://")+1){
+        url.value = temp.substring(temp.indexOf("https://"),temp.indexOf("/reports/TipoFormato?"));
+        temp = temp.substring(temp.indexOf("/reports/TipoFormato?")+21);
+    }
+    if (temp.indexOf("customer_id=")+1){
+        temp = temp.substring(temp.indexOf("&customer_id=")+13);
+        if (temp.indexOf("&")+1){
+            customerId.value = temp.substring(0,temp.indexOf("&"));
+        }else {
+            customerId.value = temp.substring(0,temp.length);
+        }
+    }
+    if(temp.indexOf("&requestor_id=")+1){
+        temp = temp.substring(temp.indexOf("&requestor_id=")+14);
+        if (temp.indexOf("&")+1){
+            requestorId.value = temp.substring(0,temp.indexOf("&"));
+        }else {
+            requestorId.value = temp.substring(0,temp.length);
+        }
+    }
+    if (temp.indexOf("&api_key=")+1){
+        temp = temp.substring(temp.indexOf("&api_key=")+9);
+        if (temp.indexOf("&")+1){
+            apiKey.value = temp.substring(0,temp.indexOf("&"));
+        }
+        else {
+            apiKey.value = temp.substring(0,temp.length);
+        }
+    }
+    if(temp.indexOf("&platform=")+1){
+        platform.value = temp.substring(temp.indexOf("&platform=")+10,temp.length);
+    }
+}
+</script>
+
+
+    <button type="submit" class="btn btn-primary" value = "Submit">Agregar base de datos</button>
+</form>
+</body>
+</html>

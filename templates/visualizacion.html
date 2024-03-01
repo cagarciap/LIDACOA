@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="favicon.ico">
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    <title>Visualizacion de Información</title>
+</head>
+<body>
+{% block content %}
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Nombre Base de datos</th>
+            <th>Formato de Consulta</th>
+            <th>Fecha Inicial Consulta</th>
+            <th>Fecha Final Consulta</th>
+            <th>Total de reporte</th>
+        </tr>
+    </thead>
+    {% for consulta in registros %}
+        <tr>
+            {% for key, value in consulta.items %}
+                <th>{{value}}</th>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+
+<a button type="submit" href="/downloadInformacion?informacion={{registros}}" class="btn btn-primary mb-2" >Descargar</a>
+<!--<button type="submit" > Descargar </button>-->
+{% endblock %}
+
+</body>
+</html>

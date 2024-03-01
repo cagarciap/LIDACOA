@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="favicon.ico">
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    <title>Menu Formatos</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        function openNav() {
+          document.getElementById("opciones").style.width = "400px";
+        }
+
+        function mostrarFormulario() {
+            document.getElementById("BuscarFormato").style.display = "none";
+            document.getElementById("verFormatos").style.display = "none";
+            document.getElementById("agregarNuevoFormato").style.display = "block";
+            $("#agregarNuevoFormato").load("/agregarFormato");
+        }
+
+       function verFormato() {
+          document.getElementById("BuscarFormato").style.display = "none";
+          document.getElementById("agregarNuevoFormato").style.display = "none";
+          document.getElementById("verFormatos").style.display = "block";
+          $("#verFormatos").load("/verFormatos");
+        }
+
+        function buscarFormato(){
+            document.getElementById("BuscarFormato").style.display = "block";
+            document.getElementById("agregarNuevoFormato").style.display = "none";
+            document.getElementById("verFormatos").style.display = "none";
+
+        }
+
+        function closeNav() {
+          document.getElementById("opciones").style.width = "0";
+        }
+    </script>
+
+    <style>
+
+        #BuscarFormato{
+            display: none;
+            width: 30%;
+            height: auto;
+            margin-left: 40%;
+            margin-top: 2%;
+        }
+
+        #abrir{
+            display: none;
+        }
+
+        #opciones{
+            width: 400px;
+        }
+
+        #agregarNuevoFormato{
+            display: none;
+            wight: 50px;
+            height: 100px;
+            margin-left: 25%;
+            margin-right: 10%;
+        }
+        #verFormatos{
+            display: none;
+            wight: 100px;
+            height: 100px;
+            margin-left: 30%;
+        }
+
+        .buttonMenu{
+            background: #169BD5;
+            color: white;
+        }
+
+        .buttonMenu:hover {
+            background: transparent;
+            color: white;
+        }
+
+        .buttonMenu p{
+            color: #BBF4F9;
+        }
+
+        .buttonMenu:hover p{
+            color: white;
+        }
+
+        .menuDesplegable {
+            height: auto;
+            width: 0;
+            position: fixed;
+            background-color: #ffff;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .menuDesplegable .opcion1 {
+            width: 75%;
+            height: auto;
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: black;
+            display: block;
+            margin-top: 7%;
+            border: solid 1px #CCCECE;
+        }
+
+        .menuDesplegable .opcion2 {
+            width: 75%;
+            height: auto;
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: black;
+            display: block;
+            border: solid 1px #CCCECE;
+        }
+
+        .menuDesplegable .opcion1:hover {
+            background-color: #F7F7F7;
+        }
+
+        .menuDesplegable .opcion2:hover {
+            background-color: #F7F7F7;
+        }
+
+        .menuDesplegable .labelCrearReporte:hover {
+            background-color: #F7F7F7;
+        }
+
+
+        .menuDesplegable .closebtn {
+            position: absolute;
+            top: 0;
+            right: 18%;
+            text-decoration: none;
+            font-size: 36px;
+            color: black;
+            display: block;
+            margin-top: 11%;
+            background: orange;
+            border-radius: 0px 5px 5px 0px;
+        }
+
+        .menuDesplegable .closebtn:hover {
+            background: #169BD5;
+        }
+
+        .menuDesplegable .labelCrearReporte{
+            width: 75%;
+            height: 55px;
+            background: #169BD5;
+            position: absolute;
+            top: 15%;
+            font-size: 25px;
+            border-radius: 5px 5px 0px 0px;
+            border: solid 1px #CCCECE;
+        }
+
+        .desplegarMenu{
+            font-size:30px;
+            cursor:pointer;
+            background-color: orange;
+            border-radius: 0px 5px 5px 0px;
+            width: 30px;
+        }
+
+        .desplegarMenu:hover{
+            background-color: #169BD5;
+
+        }
+
+    </style>
+
+</head>
+<body>
+{% csrf_token %}
+{% if mensaje %}
+    <script>
+        alert('{{mensaje}}');
+    </script>
+{% endif %}
+<div style="width: 100%; height: 200px;" id="barra_de_logo">
+    <div style="width: 180px; height: 100%; margin-left: 15%; float: left" id="logo">
+        <img src="/imagenLogo" width="500px" height="400" class="img-fluid"/>
+    </div>
+    <div style="width: 250px; height: 100%; margin-left: 33%; float: left" id="usuario">
+        <h6 style="margin-top: 17%; text-align: right; font-family:Arial; font-size: 20px">{{e}}</h6>
+    </div>
+    <div style="width: 180px; height: 100%; margin-right: 15%; float: right" id="salir">
+        <button type="button" class="btn btn-primary" onclick ="location.href='{% url 'log' %}'" style="border: solid 1px; margin-top: 18%; width: 150px">Salir</button>
+    </div>
+
+</div>
+
+<div style="width: 100%; height: 100px; float: left; background: #000066" id="nombre_software">
+    <h6 style="font-family: Arial; color: white; margin-left: 15%; margin-top: 30px; font-size:40px">LIDACOA Library Data Collection Analytic</h6>
+</div>
+<br>
+
+<nav class="navbar navbar-expand-lg" style="background-color: #000066; wight: 100%; height: 80px">
+  <div class="collapse navbar-collapse" id="navbarNav" style="height: 100%">
+    <ul class="navbar-nav" style="margin-left: 14.5%; height: 100%; margin-right: 13%; width: 100%">
+      <li style="height: 80%; width: 300px; background: #169BD5;"></li>
+      <li class="nav-item active buttonMenu" style="height: 80%; width: 100%;">
+        <button type="button" class="btn" style="border-radius:0%; height: 80%; width: 100%;" onclick="location.href='{% url 'createReport' %}'"><p style="font-family: Arial; font-size: auto">Reporte</p></button>
+      </li>
+      <li class="nav-item active buttonMenu" style="height: 80%; width: 100%">
+        <button type="button" class="btn" style="border-radius:0%; height: 80%; width: 100%" onclick="location.href='{% url 'menuBasesDatos' %}'"><p style="font-family: Arial; font-size: auto">Control Bases de Datos</p></button>
+      </li>
+      <li class="nav-item active buttonMenu" style="height: 80%; width: 100%">
+        <button type="button" class="btn" style="border-radius:0%; height: 80%; width: 100%" onclick="location.href='{% url 'menuFormatos' %}'"><p style="font-family: Arial; font-size: auto">Control Formatos</p></button>
+      </li>
+      <li class="nav-item active buttonMenu" style="height: 80%; width: 100%">
+        <button type="button" class="btn" style="border-radius:0%; height: 80%; width: 100%" onclick="location.href='{% url 'descargarInformacion' %}'"><p style="font-family: Arial; font-size: auto">Visualización Reporte</p></button>
+      </li>
+      <li class="nav-item active buttonMenu" style="height: 80%; width: 100%">
+        <button type="button" class="btn" style="border-radius:0%; height: 80%; width: 100%" onclick="location.href='{% url 'signup'%}'"><p style="font-family: Arial; font-size: auto">Registrar Usuario</p></button>
+      </li>
+      <li style="height: 80%; width: 300px; background: #169BD5;"></li>
+    </ul>
+  </div>
+</nav>
+<br>
+<br>
+
+<div id="opciones" class="menuDesplegable">
+    <div class="labelCrearReporte">
+        <p style="margin-left:34px; margin-top: 1%">Control Formatos</p>
+    </div>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a class="opcion1" href="#" onclick="mostrarFormulario()">Agregar Nuevo Formato</a>
+    <a class="opcion2" href="#" onclick="verFormato()">Ver Formatos</a>
+    <a class="opcion2" href="#" onclick="buscarFormato()">Buscar Formato</a>
+</div>
+
+<span class="desplegarMenu" onclick="openNav()">&#10132;</span>
+
+<div id="agregarNuevoFormato">
+</div>
+
+<div id="verFormatos">
+
+</div>
+
+<div id="BuscarFormato">
+    {% include 'buscarFormatos.html'%}
+</div>
+
+</body>
+</html>
